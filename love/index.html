@@ -10,16 +10,10 @@
 </head>
 <body>
 
-    <!-- Layered Pink Background -->
     <div class="stacked-bg"></div>
-
-    <!-- Random Background Photos -->
-    <div id="random-photos-bg"></div>
-
-    <!-- CSS Floating Hearts (no canvas needed) -->
+    <canvas id="bg-canvas"></canvas>
     <div id="hearts-layer"></div>
 
-    <!-- Carousel -->
     <div id="drag-container">
         <div id="spin-container">
             <img src="images/r1.jpg" alt="">
@@ -32,12 +26,14 @@
             <img src="images/r15.jpg" alt="">
             <img src="images/r16.jpg" alt="">
             <img src="images/r17.jpg" alt="">
-            <p>Happy Birthday Kaka Diah! 💖</p>
         </div>
+
+        <div id="neon-text">
+            <p>Happy Birthday<br><span>Kaka Diah! 💖</span></p>
+        </div>
+
         <div id="ground"></div>
     </div>
-
-    <div id="music-container"></div>
 
     <audio id="bgAudio" playsinline loop>
         <source src="music/setlove.mp3" type="audio/mpeg">
@@ -45,54 +41,69 @@
 
     <script src="main.js"></script>
     <script>
-        // ===== 1. Random Background Photos =====
-        const existingImgs = ['r1','r2','r3','r4','r9','r12','r14','r15','r16','r17'];
-        const bgWall = document.getElementById('random-photos-bg');
-        existingImgs.forEach(name => {
-            const img = document.createElement('img');
-            img.src = `images/${name}.jpg`;
-            img.className = 'bg-random-photo';
-            img.style.left   = Math.random() * 95 + 'vw';
-            img.style.top    = Math.random() * 95 + 'vh';
-            img.style.transform = `rotate(${Math.random() * 50 - 25}deg) scale(${Math.random() * 0.35 + 0.45})`;
-            img.style.opacity = '0.13';
-            bgWall.appendChild(img);
-        });
+        // ===== 1. Kolase Rapi (Grid Mode) =====
+        function initBgGrid() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            const imgs = Array.from(document.querySelectorAll('#spin-container img'));
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
-        // ===== 2. CSS Floating Hearts =====
+            function drawGrid() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const cols = 8;
+                const imgSize = canvas.width / cols;
+                const rows = Math.ceil(canvas.height / imgSize) + 1;
+
+                ctx.globalAlpha = 0.15; // Transparansi kolase
+                
+                let imgIdx = 0;
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const img = imgs[imgIdx % imgs.length];
+                        if (img.complete) {
+                            // Gambar berjejer lurus tanpa rotasi acak
+                            ctx.drawImage(img, c * imgSize, r * imgSize, imgSize - 2, imgSize - 2);
+                        }
+                        imgIdx++;
+                    }
+                }
+            }
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawGrid();
+            });
+
+            if (imgs.every(img => img.complete)) drawGrid();
+            else imgs.forEach(img => img.addEventListener('load', drawGrid));
+        }
+
+        // ===== 2. Floating Hearts =====
         const heartsLayer = document.getElementById('hearts-layer');
         function spawnHeart() {
             const h = document.createElement('span');
             h.textContent = ['💖','🌸','💕','✨'][Math.floor(Math.random()*4)];
             h.className = 'float-heart';
             h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = (Math.random() * 16 + 12) + 'px';
-            h.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            h.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            h.style.animationDuration = (Math.random() * 5 + 5) + 's';
             heartsLayer.appendChild(h);
-            setTimeout(() => h.remove(), 8000);
+            setTimeout(() => h.remove(), 10000);
         }
-        setInterval(spawnHeart, 600);
+        setInterval(spawnHeart, 800);
 
-        // ===== 3. Music (fresh start) =====
+        // ===== 3. Music =====
         window.addEventListener('load', () => {
+            initBgGrid();
             const audio = document.getElementById('bgAudio');
-            audio.volume = 1.0;
-            audio.currentTime = 0;
-
             const startAudio = () => {
-                audio.play().then(() => {
-                    console.log("Music started!");
-                    ['click','touchstart','mousedown','keydown']
-                        .forEach(ev => document.removeEventListener(ev, startAudio));
-                }).catch(e => console.log("Playback blocked, waiting for interaction..."));
+                audio.play().catch(() => {});
+                ['click','touchstart'].forEach(ev => document.removeEventListener(ev, startAudio));
             };
-
-            // Pemicu otomatis (jika diizinkan browser)
-            startAudio();
-            
-            // Pemicu interaksi (wajib untuk HP)
-            ['click','touchstart','mousedown','keydown']
-                .forEach(ev => document.addEventListener(ev, startAudio, { once: true }));
+            ['click','touchstart'].forEach(ev => document.addEventListener(ev, startAudio));
         });
     </script>
 </body>
