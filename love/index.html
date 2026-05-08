@@ -16,6 +16,8 @@
     <div class="stacked-bg"></div>
     <!-- Random Background Photos -->
     <div id="random-photos-container"></div>
+    <!-- Canvas for effects -->
+    <canvas id="canvas"></canvas>
 
     <div id="drag-container">
         <div id="spin-container">
@@ -77,9 +79,14 @@
 
             audio.play().catch(function(e) {
                 console.log('Audio playback failed:', e);
-                document.addEventListener('click', function() {
+                // More robust trigger
+                const playOnInteract = () => {
                     audio.play();
-                }, { once: true });
+                    document.removeEventListener('click', playOnInteract);
+                    document.removeEventListener('touchstart', playOnInteract);
+                };
+                document.addEventListener('click', playOnInteract);
+                document.addEventListener('touchstart', playOnInteract);
             });
 
             setInterval(() => {

@@ -136,19 +136,18 @@ body::after {
 }
 
 #canvas {
-    background-color:transparent;
-    color: transparent;
-    margin: 0;
-    overflow: hidden;
-    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    pointer-events: none;
+    background: transparent;
 }
 
 #canva {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    overflow: hidden;
+    display: none; /* Hide old container if any */
 }
 
 p {
