@@ -110,12 +110,51 @@ document.onpointerdown = function (e) {
   return false;
 };
 
-document.onmousewheel = function(e) {
-  e = e || window.event;
-  var d = e.wheelDelta / 20 || -e.detail;
-  radius += d;
-  init(1);
-};
+// Improved Zoom Logic (Mouse Wheel & Pinch)
+var initialPinchDistance = null;
+
+function handleZoom(delta) {
+    radius += delta;
+    // Set limits for radius
+    if (radius < 150) radius = 150;
+    if (radius > 800) radius = 800;
+    
+    // Update ground size based on radius
+    ground.style.width = radius * 3 + "px";
+    ground.style.height = radius * 3 + "px";
+    
+    init(0.1); // Fast update
+}
+
+// Mouse Wheel
+window.addEventListener('wheel', function(e) {
+    var delta = e.deltaY * -0.2;
+    handleZoom(delta);
+}, { passive: false });
+
+// Pinch to Zoom (Touch)
+document.addEventListener('touchmove', function(e) {
+    if (e.touches.length === 2) {
+        var dist = Math.hypot(
+            e.touches[0].pageX - e.touches[1].pageX,
+            e.touches[0].pageY - e.touches[1].pageY
+        );
+
+        if (initialPinchDistance === null) {
+            initialPinchDistance = dist;
+        } else {
+            var delta = (dist - initialPinchDistance) * 0.5;
+            handleZoom(delta);
+            initialPinchDistance = dist;
+        }
+    }
+}, { passive: false });
+
+document.addEventListener('touchend', function(e) {
+    if (e.touches.length < 2) {
+        initialPinchDistance = null;
+    }
+});
 
 
 
