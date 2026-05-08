@@ -36,10 +36,16 @@ function applyTranform(obj, isManual = false) {
   if (tY < -45) tY = -45;
   
   if (isManual) {
-    // Rotasi manual pada wadah luar (termasuk kemiringan tY)
+    // Rotasi manual pada wadah luar
     obj.style.transform = "translate(-50%, -50%) rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
+    
+    // Teknik Billboard: Putar balik tulisan agar selalu menghadap depan (tidak terbalik)
+    var neon = document.getElementById('neon-text');
+    if (neon) {
+      neon.style.transform = "translate(-50%, -50%) rotateY(" + (-tX) + "deg) rotateX(" + (tY) + "deg)";
+    }
   } else {
-    // Rotasi otomatis hanya pada ospin (sumbu Y saja)
+    // Rotasi otomatis pada ospin
     obj.style.transform = "rotateY(" + tX + "deg)";
   }
 }
