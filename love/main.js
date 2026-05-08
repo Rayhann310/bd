@@ -1,7 +1,6 @@
 // ===== Carousel Configuration =====
-var radius = 200; // Sedikit lebih lebar agar elegan
-var autoRotate = true;
-var rotateSpeed = -60;
+var radius = 200;
+var rotateSpeed = 0.2; // Kecepatan putar otomatis (derajat per frame)
 var imgWidth = 140;
 var imgHeight = 190;
 
@@ -26,20 +25,39 @@ function init(delayTime) {
 // Initial setup
 setTimeout(init, 1000);
 
-// ===== Interaction Logic =====
+// ===== Animation & Interaction Logic =====
 var nX, nY, sX, sY, desX = 0, desY = 0, tX = 0, tY = 10;
+var isDragging = false;
 var initialPinchDist = null;
 var zoomTarget = radius;
 
-function applyTranform(obj) {
+function applyTranform(obj, isManual = false) {
   if (tY > 180) tY = 180;
   if (tY < 0) tY = 0;
-  obj.style.transform = "translate(-50%, -50%) rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
+  
+  if (isManual) {
+    // Rotasi manual pada wadah luar (termasuk kemiringan tY)
+    obj.style.transform = "translate(-50%, -50%) rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
+  } else {
+    // Rotasi otomatis hanya pada ospin (sumbu Y saja)
+    obj.style.transform = "rotateY(" + tX + "deg)";
+  }
 }
+
+// Global Animation Loop (Paling Stabil & Halus)
+function animate() {
+  if (!isDragging) {
+    tX += rotateSpeed; // Tambahkan putaran otomatis
+    applyTranform(ospin, false); // Putar ospin secara halus
+  }
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
 
 // Global Pointer Events (Handles Mouse & Touch)
 document.onpointerdown = function(e) {
   clearInterval(odrag.timer);
+  isDragging = true;
   sX = e.clientX;
   sY = e.clientY;
 
@@ -50,18 +68,19 @@ document.onpointerdown = function(e) {
     desY = nY - sY;
     tX += desX * 0.15;
     tY += desY * 0.15;
-    applyTranform(odrag); // Gunakan odrag untuk rotasi manual
+    applyTranform(odrag, true); // Drag manual pada wadah luar
     sX = nX;
     sY = nY;
   };
 
   this.onpointerup = function() {
+    isDragging = false;
     odrag.timer = setInterval(function() {
       desX *= 0.95;
       desY *= 0.95;
       tX += desX * 0.1;
       tY += desY * 0.1;
-      applyTranform(odrag);
+      applyTranform(odrag, true);
       if (Math.abs(desX) < 0.5 && Math.abs(desY) < 0.5) {
         clearInterval(odrag.timer);
       }
@@ -81,12 +100,10 @@ function handleZoom(delta) {
   init(0.05);
 }
 
-// Mouse Wheel Zoom
 window.addEventListener('wheel', function(e) {
   handleZoom(e.deltaY * -0.5);
 }, { passive: false });
 
-// Touch Pinch Zoom
 document.addEventListener('touchmove', function(e) {
   if (e.touches.length === 2) {
     var dist = Math.hypot(

@@ -76,7 +76,6 @@ body {
     display: flex;
     margin: auto;
     transform-style: preserve-3d;
-    animation: spin 60s infinite linear; /* Rotasi otomatis paksa via CSS */
 }
 
 #drag-container img {
