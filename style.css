@@ -105,6 +105,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 10vh; /* Shifted down slightly */
     z-index: 1;
     opacity: 0;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -116,7 +117,7 @@ body {
 #kadoIn {
     cursor: pointer;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -142,16 +143,17 @@ body {
 }
 
 #ket {
-    font-size: clamp(0.9rem, 3vw, 1.2rem);
-    font-weight: 600;
-    color: var(--accent-color);
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    font-weight: 700;
+    color: #ffffff; /* White text for better contrast */
     text-align: center;
-    background: var(--glass-bg);
-    padding: 0.5rem 1.5rem;
+    background: rgba(0, 0, 0, 0.3); /* Darker glass background */
+    padding: 0.6rem 1.8rem;
     border-radius: 50px;
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
 
 /* Stickers */
