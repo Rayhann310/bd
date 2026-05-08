@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wish - Kaka Diah</title>
+    <link rel="icon" type="image/x-icon" href="https://feeldreams.github.io/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Pacifico&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div id="loading-container" class="sembunyi">
+        <div id="loading-bar"></div>
+        <p id="loading-text">Menyiapkan kejutan terakhir... ✨</p>
+    </div>
+
+    <div class="floating-elements" id="balloons"></div>
+    <div class="floating-hearts" id="hearts-container"></div>
+    <div id="bodyblur"><img src="" id="wallpaper" /></div>
+
+    <div id="Content" style="opacity: 1;">
+        <div class="kumpulanstiker">
+            <img src="https://feeldreams.github.io/bunga.gif" id="sticker1" class="cute-sticker" alt="sticker" />
+            <img src="https://media.tenor.com/snFoLI-S9CQAAAAj/milk-and-mocha.gif" id="sticker2" class="cute-sticker" style="display:none;" alt="sticker" />
+            <img src="https://feeldreams.github.io/emawh.gif" id="sticker3" class="cute-sticker" style="display:none;" alt="sticker" />
+        </div>
+
+        <blockquote id="bq" class="active" style="display: block; border-radius: 40px;">
+            <p id="halo-wish" style="font-family: 'Pacifico', cursive; font-size: 1.8rem; color: #ff217d; margin-bottom: 15px;">Halo Kaka Diah Sayang!</p>
+            <p id="ucapan-get"></p>
+            
+            <div id="kolombaru-wish" style="display: flex; justify-content: center; gap: 15px; margin: 20px 0; font-size: 2rem; opacity: 0;">
+                <span>🌸</span>
+                <span>💖</span>
+                <span>🎂</span>
+                <span>✨</span>
+            </div>
+        </blockquote>
+
+        <div id="Tombol" style="display: none; margin-top: 20px;">
+            <a id="By" onclick="menuju()" style="background: linear-gradient(to right, #ff9a9e, #ff217d); padding: 12px 35px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 20px rgba(255, 33, 125, 0.3);">Lihat Kejutan Terakhir 🚀</a>
+        </div>
+    </div>
+
+    <style>
+        .cute-sticker { width: clamp(70px, 22vw, 110px); height: clamp(70px, 22vw, 110px); margin: 5px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .heart-pixel { position: absolute; color: #ff217d; font-size: 20px; pointer-events: none; animation: floatHeart 4s linear infinite; opacity: 0; }
+        @keyframes floatHeart { 0% { transform: translateY(0) scale(0); opacity: 0; } 20% { opacity: 0.8; } 100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } }
+    </style>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-pixel';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.getElementById('hearts-container').appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 400);
+
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+
+        window.onload = function() {
+            new TypeIt("#ucapan-get", {
+                strings: [
+                    "HBD Kaka Diah yang ke-33! 🎉", 
+                    "Terima kasih sudah menjadi orang hebat... 😊",
+                    "----------------------------------",
+                    "Semoga di usia baru ini Kaka makin bahagia, sehat, dan selalu dikelilingi oleh orang-orang baik. Kaka pantas mendapatkan semua hal indah di dunia ini! "
+                ],
+                speed: 50,
+                nextStringDelay: 1000,
+                waitUntilVisible: true,
+                afterComplete: function() {
+                    document.getElementById('sticker2').style.display = 'inline-flex';
+                    document.getElementById('kolombaru-wish').style.opacity = '1';
+                    document.getElementById('kolombaru-wish').style.transition = 'all 1s ease';
+                    document.getElementById('sticker3').style.display = 'inline-flex';
+                    document.getElementById('Tombol').style.display = 'block';
+                }
+            }).go();
+        };
+
+        function menuju() {
+            const loadingContainer = document.getElementById("loading-container");
+            const loadingBar = document.getElementById("loading-bar");
+            loadingContainer.classList.remove('sembunyi');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => { window.location = "./love/index.html"; }, 500);
+                }
+                loadingBar.style.width = progress + "%";
+            }, 50);
+        }
+    </script>
+</body>
+</html>

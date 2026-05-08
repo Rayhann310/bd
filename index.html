@@ -1,22 +1,63 @@
-    <!-- Audio -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Kaka Diah!</title>
+    <meta name="description" content="Kado Spesial untuk Kaka Diah">
+    <link rel="icon" type="image/x-icon" href="https://feeldreams.github.io/favicon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Pacifico&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <!-- Loading Bar -->
+    <div id="loading-container" class="sembunyi">
+        <div id="loading-bar"></div>
+        <p id="loading-text">Ssttt... Kado sedang dibuka, kejutan segera datang... 🎁✨</p>
+    </div>
+
+    <!-- Festive Background Elements -->
+    <div class="floating-elements" id="balloons"></div>
+    
     <audio src="./y2mate (mp3cut.net).mp3" id="linkmp3" class="sembunyi"></audio>
 
-    <!-- Background Layers -->
-    <div class="floating-elements" id="balloons"></div>
     <div id="bodyblur">
         <img src="" id="wallpaper" />
     </div>
 
-    <!-- Configuration Export to JS -->
-    <script>
-        window.targetName = "<?php echo $target_name; ?>";
-        window.targetAge = "<?php echo $target_age; ?>";
-        window.baseAssetsUrl = "<?php echo $base_url; ?>";
-    </script>
+    <div id="Content">
+        <div id="kadoIn">
+            <img src="./Valentine-Surprise.png" alt="Open Gift Button" />
+        </div>
+        
+        <p id="ket">
+            <span>Ada kado spesial untuk Kaka Diah! ✨</span>
+        </p>
 
-    <!-- Main Logic -->
-    <script src="<?php echo $base_url; ?>/js/main.js"></script>
-    
+        <div class="kumpulanstiker">
+            <img src="https://media.tenor.com/4Ijycn6xFzUAAAAj/mochi-blue-roses.gif" id="fotostiker" alt="sticker" />
+        </div>
+
+        <blockquote id="bq">
+            <p id="kalimat">Halo Kaka Diah, Selamat Ulang Tahun ke-33! 🎉</p>
+            <p id="pesan1">Tap kado untuk kejutan spesial! 🎁</p>
+        </blockquote>
+
+        <div id="Tombol"><a id="By">Lanjut ✨</a></div>
+    </div>
+
+    <script src="./assets/js/main.js"></script>
     <script>
         // Initialize balloons
         const balloonContainer = document.getElementById('balloons');
@@ -31,27 +72,12 @@
             balloonContainer.appendChild(balloon);
         }
 
-        const swalst = Swal.mixin({
-            timer: 2300,
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            timerProgressBar: true,
-            imageHeight: 90,
-        });
-
         let audio = new Audio(document.getElementById('linkmp3').src);
         let fungsiAwal = 0;
         
-        // Initial display
         setTimeout(() => {
             document.getElementById('Content').style.opacity = '1';
         }, 500);
-
-        const swals = Swal.mixin({
-            allowOutsideClick: false,
-            cancelButtonColor: "#FF0040",
-            imageHeight: 80,
-        });
 
         document.getElementById("kadoIn").onclick = function () {
             if (fungsiAwal == 0) {
@@ -83,7 +109,7 @@
                             progress = 100;
                             clearInterval(interval);
                             setTimeout(() => {
-                                window.location = "wish.php";
+                                window.location = "wish.html";
                             }, 500);
                         }
                         loadingBar.style.width = progress + "%";
@@ -91,26 +117,6 @@
                 }, 800);
             }
         };
-
-        async function pertanyaan() {
-            var { isConfirmed: prtanya } = await swals.fire({
-                title: window.targetName + ", siap lanjut ke kejutan berikutnya?",
-                text: "Masih banyak hal seru menunggumu! 🚀",
-                imageUrl: document.getElementById('fotostiker5').src,
-                showCancelButton: true,
-                confirmButtonText: "Iya, siap! 💖",
-                cancelButtonText: "Bentar dulu",
-            });
-            
-            if (prtanya) {
-                confetti({
-                    particleCount: 200,
-                    spread: 100,
-                    origin: { y: 0.6 }
-                });
-                menuju();
-            }
-        }
     </script>
 </body>
 </html>
