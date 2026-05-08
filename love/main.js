@@ -1,5 +1,5 @@
 // ===== Carousel Configuration =====
-var radius = 300;
+var radius = 180; // closer spacing between images
 var autoRotate = true;
 var rotateSpeed = -60;
 var imgWidth = 140;
