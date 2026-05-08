@@ -59,13 +59,16 @@
 
     <script src="./assets/js/main.js"></script>
     <script>
-        // Loading Messages
+        // Loading Messages (Lebih Mengena di Hati)
         const loadingMsgs = [
-            "Membuka kado pelan-pelan... 🎁",
-            "Menyiapkan senyum terbaik... 😊",
-            "Mengumpulkan doa-doa baik... ✨",
+            "Mengingat momen indah kita... ✨",
+            "Menyiapkan senyum terbaik untukmu... 😊",
+            "Mengumpulkan doa-doa tulus... 🙏",
             "Merapikan kejutan spesial... 🎀",
-            "Hampir sampai! Sabar ya Kaka Diah... 🐼💖"
+            "Menata cinta dalam setiap foto... 📸",
+            "Membangun kenangan manis... 🏰",
+            "Hampir sampai! Sabar ya Kaka Diah... 🐼💖",
+            "Mempersiapkan hati yang paling tulus... ❤️"
         ];
 
         // Initialize balloons
@@ -125,14 +128,18 @@
                     let progress = 0;
                     let msgIndex = 0;
 
-                    // Cycle loading text
+                    // Cycle loading text (setiap 1.5 detik)
                     const msgInterval = setInterval(() => {
-                        loadingText.innerHTML = loadingMsgs[msgIndex];
-                        msgIndex = (msgIndex + 1) % loadingMsgs.length;
-                    }, 800);
+                        loadingText.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingText.innerHTML = loadingMsgs[msgIndex];
+                            loadingText.style.opacity = '1';
+                            msgIndex = (msgIndex + 1) % loadingMsgs.length;
+                        }, 500);
+                    }, 1500);
                     
                     const interval = setInterval(() => {
-                        progress += 3; // Slightly slower for more text time
+                        progress += 1.5; // Dibuat lebih lambat (total ~10 detik)
                         if (progress >= 100) {
                             progress = 100;
                             clearInterval(interval);
@@ -142,7 +149,7 @@
                             }, 500);
                         }
                         loadingBar.style.width = progress + "%";
-                    }, 100);
+                    }, 150);
                 }, 800);
             }
         };

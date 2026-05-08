@@ -94,10 +94,22 @@
         }
         setInterval(spawnHeart, 800);
 
-        // ===== 3. Music =====
+        // ===== 3. Music (Bersambung) =====
         window.addEventListener('load', () => {
             initBgGrid();
             const audio = document.getElementById('bgAudio');
+            audio.volume = 1.0;
+            
+            if (localStorage.getItem('musicTime')) {
+                audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
+            }
+
+            setInterval(() => {
+                if (!audio.paused) {
+                    localStorage.setItem('musicTime', audio.currentTime);
+                }
+            }, 500);
+
             const startAudio = () => {
                 audio.play().catch(() => {});
                 ['click','touchstart'].forEach(ev => document.removeEventListener(ev, startAudio));

@@ -116,17 +116,34 @@
         function menuju() {
             const loadingContainer = document.getElementById("loading-container");
             const loadingBar = document.getElementById("loading-bar");
+            const loadingText = document.getElementById("loading-text");
             loadingContainer.classList.remove('sembunyi');
+            
+            const transMsgs = [
+                "Membuka gerbang kejutan... 🚪",
+                "Menyiapkan 3D Carousel spesial... 🎡",
+                "Merapikan foto-foto kenangan... 📸",
+                "Hampir sampai di kejutan terakhir... 💖"
+            ];
+            
             let progress = 0;
+            let msgIdx = 0;
+            
+            const msgInterval = setInterval(() => {
+                loadingText.innerHTML = transMsgs[msgIdx];
+                msgIdx = (msgIdx + 1) % transMsgs.length;
+            }, 2000);
+
             const interval = setInterval(() => {
-                progress += 5;
+                progress += 2; // Lebih lambat (total ~7.5 detik)
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(interval);
+                    clearInterval(msgInterval);
                     setTimeout(() => { window.location = "./love/index.html"; }, 500);
                 }
                 loadingBar.style.width = progress + "%";
-            }, 50);
+            }, 150);
         }
     </script>
 </body>
