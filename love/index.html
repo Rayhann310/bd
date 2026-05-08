@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kejutan Terakhir - Kaka Diah</title>
+    <title>Kejutan Terakhir - Kaka Diah 💖</title>
     <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
     <link rel="stylesheet" href="main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <!-- Layered Pink Background -->
     <div class="stacked-bg"></div>
+
     <!-- Random Background Photos -->
-    <div id="random-photos-container"></div>
-    <!-- Canvas for effects -->
+    <div id="random-photos-bg"></div>
+
+    <!-- Canvas for heart effects -->
     <canvas id="canvas"></canvas>
 
+    <!-- Carousel -->
     <div id="drag-container">
         <div id="spin-container">
             <img src="images/r1.jpg" alt="">
@@ -42,153 +43,95 @@
         </div>
         <div id="ground"></div>
     </div>
-    
+
     <div id="music-container"></div>
 
-    <!-- Audio tanpa autoplay untuk menghindari pemblokiran awal -->
-    <audio id="myAudio" playsinline loop>
+    <!-- Musik baru, mulai dari awal -->
+    <audio id="bgAudio" playsinline loop>
         <source src="music/setlove.mp3" type="audio/mpeg">
     </audio>
 
     <script src="main.js"></script>
-
     <script>
-        // 1. Generate Random Background Photos
-        const bgContainer = document.getElementById('random-photos-container');
-        for (let i = 1; i <= 17; i++) {
+        // ============ 1. Background Random Photos ============
+        const bgWall = document.getElementById('random-photos-bg');
+        const totalImgs = 17;
+        for (let i = 1; i <= totalImgs; i++) {
             const img = document.createElement('img');
             img.src = `images/r${i}.jpg`;
-            img.className = 'bg-photo-random';
-            img.style.left = Math.random() * 100 + 'vw';
-            img.style.top = Math.random() * 100 + 'vh';
-            img.style.transform = `rotate(${Math.random() * 40 - 20}deg) scale(${Math.random() * 0.5 + 0.5})`;
-            img.style.opacity = '0.15';
-            bgContainer.appendChild(img);
+            img.className = 'bg-random-photo';
+            img.style.cssText = `
+                left: ${Math.random() * 100}vw;
+                top: ${Math.random() * 100}vh;
+                transform: rotate(${Math.random() * 50 - 25}deg) scale(${Math.random() * 0.4 + 0.5});
+                opacity: 0.12;
+            `;
+            bgWall.appendChild(img);
         }
 
+        // ============ 2. Musik Baru (mulai dari 0) ============
+        const audio = document.getElementById('bgAudio');
+        audio.currentTime = 0; // Mulai dari awal
+
+        const startAudio = () => {
+            audio.play().then(() => {
+                ['click','touchstart','mousedown','keydown']
+                    .forEach(ev => document.removeEventListener(ev, startAudio));
+            }).catch(() => {});
+        };
+
+        startAudio();
+        ['click','touchstart','mousedown','keydown']
+            .forEach(ev => document.addEventListener(ev, startAudio, { once: true }));
+
+        // ============ 3. Canvas Heart & Firework Effects ============
         window.onload = function() {
-            var audio = document.getElementById("myAudio");
-            
-            // 2. Music Persistence Logic
-            if (localStorage.getItem('musicTime')) {
-                audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
-            }
-
-            const startAudio = () => {
-                audio.play().then(() => {
-                    removeListeners();
-                }).catch(e => {
-                    console.log("Waiting for interaction...");
-                });
-            };
-
-            const removeListeners = () => {
-                const events = ['click', 'touchstart', 'mousedown', 'keydown'];
-                events.forEach(e => document.removeEventListener(e, startAudio));
-            };
-
-            startAudio();
-            const events = ['click', 'touchstart', 'mousedown', 'keydown'];
-            events.forEach(e => document.addEventListener(e, startAudio, { once: true }));
-
-            setInterval(() => {
-                if (!audio.paused) {
-                    localStorage.setItem('musicTime', audio.currentTime);
-                }
-            }, 500);
-
-            // 3. Hiệu ứng pháo hoa và trái tim (Canvas)
             const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
-            function random(min, max) {
-                return Math.random() * (max - min) + min;
-            }
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
 
-            function Firework(x, y) {
-                this.x = x;
-                this.y = y;
-                this.radius = random(2, 4);
-                this.color = `hsl(${random(0, 360)}, 100%, 50%)`;
-                this.vx = random(-3, 3);
-                this.vy = random(-3, 3);
-                this.life = 100;
-            }
-
-            Firework.prototype.draw = function () {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            };
-
-            Firework.prototype.update = function () {
-                this.x += this.vx;
-                this.y += this.vy;
-                this.life--;
-            };
+            function rand(min, max) { return Math.random() * (max - min) + min; }
 
             function Heart(x, y) {
                 this.x = x;
                 this.y = y;
-                this.size = random(20, 40);
-                this.color = 'red';
-                this.vy = random(-2, -1);
-                this.opacity = 1;
+                this.size = rand(15, 35);
+                this.vx = rand(-1, 1);
+                this.vy = rand(-2.5, -1);
+                this.opacity = rand(0.5, 1);
+                this.color = `hsl(${rand(330, 360)}, 90%, 60%)`;
             }
-
-            Heart.prototype.draw = function () {
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.bezierCurveTo(this.x - this.size / 2, this.y - this.size / 2, this.x - this.size, this.y + this.size / 3, this.x, this.y + this.size);
-                ctx.bezierCurveTo(this.x + this.size, this.y + this.size / 3, this.x + this.size / 2, this.y - this.size / 2, this.x, this.y);
-                ctx.fillStyle = this.color;
+            Heart.prototype.draw = function() {
+                ctx.save();
                 ctx.globalAlpha = this.opacity;
-                ctx.fill();
-                ctx.globalAlpha = 1;
+                ctx.fillStyle = this.color;
+                ctx.font = `${this.size}px serif`;
+                ctx.fillText('💖', this.x, this.y);
+                ctx.restore();
             };
-
-            Heart.prototype.update = function () {
+            Heart.prototype.update = function() {
+                this.x += this.vx;
                 this.y += this.vy;
-                this.opacity -= 0.01;
+                this.opacity -= 0.008;
             };
 
-            let fireworks = [];
             let hearts = [];
-
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                if (Math.random() < 0.1) {
-                    fireworks.push(new Firework(random(0, canvas.width), random(0, canvas.height)));
-                }
                 if (Math.random() < 0.05) {
-                    hearts.push(new Heart(random(0, canvas.width), canvas.height));
+                    hearts.push(new Heart(rand(0, canvas.width), canvas.height));
                 }
-
-                fireworks.forEach((firework, index) => {
-                    firework.draw();
-                    firework.update();
-                    if (firework.life <= 0) {
-                        fireworks.splice(index, 1);
-                    }
-                });
-
-                hearts.forEach((heart, index) => {
-                    heart.draw();
-                    heart.update();
-                    if (heart.opacity <= 0) {
-                        hearts.splice(index, 1);
-                    }
-                });
-
+                hearts = hearts.filter(h => h.opacity > 0);
+                hearts.forEach(h => { h.draw(); h.update(); });
                 requestAnimationFrame(animate);
             }
             animate();
-
-            // 4. Trigger animations from main.js
-            if (typeof init === 'function') init(1);
         };
     </script>
 </body>
