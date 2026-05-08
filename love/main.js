@@ -31,18 +31,10 @@ var nX, nY, sX, sY, desX = 0, desY = 0, tX = 0, tY = 10;
 var initialPinchDist = null;
 var zoomTarget = radius;
 
-// Fungsi ini sekarang mengatur wadah luar (drag)
 function applyTranform(obj) {
   if (tY > 180) tY = 180;
   if (tY < 0) tY = 0;
-  // Menambahkan translate(-50%, -50%) agar tetap di tengah saat di-drag
   obj.style.transform = "translate(-50%, -50%) rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
-}
-
-// Auto Rotate (diterapkan pada ospin agar tidak bentrok dengan drag)
-if (autoRotate) {
-  var animationName = rotateSpeed > 0 ? 'spin' : 'spinRevert';
-  ospin.style.animation = `${animationName} ${Math.abs(rotateSpeed)}s infinite linear`;
 }
 
 // Global Pointer Events (Handles Mouse & Touch)
