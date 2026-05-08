@@ -145,15 +145,15 @@ body {
 #ket {
     font-size: clamp(0.9rem, 3.5vw, 1.1rem);
     font-weight: 700;
-    color: #ffffff; /* White text for better contrast */
+    color: #ffffff; /* White text for contrast */
     text-align: center;
-    background: rgba(0, 0, 0, 0.3); /* Darker glass background */
+    background: rgba(255, 33, 125, 0.85); /* Vibrant Pink that stands out */
     padding: 0.6rem 1.8rem;
     border-radius: 50px;
-    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.6); /* Clearer white border */
     backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 32px rgba(255, 33, 125, 0.4);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 }
 
 /* Stickers */
