@@ -36,9 +36,8 @@ function init(delayTime) {
 function applyTranform(obj) {
   if (tY > 180) tY = 180;
   if (tY < 0) tY = 0;
-  // Keep translate(-50%,-50%) to maintain centering when JS overrides CSS transform
-  obj.style.transform = "translate(-50%, -50%) rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
-  obj.style.transition = "transform 0.1s ease-out";
+  // Apply rotation directly to the inner container
+  obj.style.transform = "rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
 }
 
 function playSpin(yes) {
@@ -65,7 +64,7 @@ document.onpointerdown = function(e) {
     desY = nY - sY;
     tX += desX * 0.1;
     tY += desY * 0.1;
-    applyTranform(odrag);
+    applyTranform(ospin);
     sX = nX;
     sY = nY;
   };
@@ -76,7 +75,7 @@ document.onpointerdown = function(e) {
       desY *= 0.95;
       tX += desX * 0.1;
       tY += desY * 0.1;
-      applyTranform(odrag);
+      applyTranform(ospin);
       playSpin(false);
       if (Math.abs(desX) < 0.5 && Math.abs(desY) < 0.5) {
         clearInterval(odrag.timer);
