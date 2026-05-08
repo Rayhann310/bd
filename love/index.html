@@ -44,19 +44,16 @@
     </div>
     
     <div id="music-container"></div>
-    <!-- <div id="canva">
-        <canvas id="canvas"></canvas>
-    </div> -->
 
-    <!-- Audio tự động phát -->
-    <audio id="myAudio" autoplay playsinline loop>
+    <!-- Audio tanpa autoplay untuk menghindari pemblokiran awal -->
+    <audio id="myAudio" playsinline loop>
         <source src="music/setlove.mp3" type="audio/mpeg">
     </audio>
 
     <script src="main.js"></script>
 
     <script>
-        // Generate Random Background Photos
+        // 1. Generate Random Background Photos
         const bgContainer = document.getElementById('random-photos-container');
         for (let i = 1; i <= 17; i++) {
             const img = document.createElement('img');
@@ -72,22 +69,27 @@
         window.onload = function() {
             var audio = document.getElementById("myAudio");
             
-            // Music Persistence Logic
+            // 2. Music Persistence Logic
             if (localStorage.getItem('musicTime')) {
                 audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
             }
 
-            audio.play().catch(function(e) {
-                console.log('Audio playback failed:', e);
-                // More robust trigger
-                const playOnInteract = () => {
-                    audio.play();
-                    document.removeEventListener('click', playOnInteract);
-                    document.removeEventListener('touchstart', playOnInteract);
-                };
-                document.addEventListener('click', playOnInteract);
-                document.addEventListener('touchstart', playOnInteract);
-            });
+            const startAudio = () => {
+                audio.play().then(() => {
+                    removeListeners();
+                }).catch(e => {
+                    console.log("Waiting for interaction...");
+                });
+            };
+
+            const removeListeners = () => {
+                const events = ['click', 'touchstart', 'mousedown', 'keydown'];
+                events.forEach(e => document.removeEventListener(e, startAudio));
+            };
+
+            startAudio();
+            const events = ['click', 'touchstart', 'mousedown', 'keydown'];
+            events.forEach(e => document.addEventListener(e, startAudio, { once: true }));
 
             setInterval(() => {
                 if (!audio.paused) {
@@ -95,12 +97,7 @@
                 }
             }, 500);
 
-            // Trigger animations from main.js if needed
-            if (typeof init === 'function') init(1);
-        };
-    </script>
-
-            // Hiệu ứng pháo hoa và trái tim
+            // 3. Hiệu ứng pháo hoa và trái tim (Canvas)
             const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
             canvas.width = window.innerWidth;
@@ -189,6 +186,9 @@
                 requestAnimationFrame(animate);
             }
             animate();
+
+            // 4. Trigger animations from main.js
+            if (typeof init === 'function') init(1);
         };
     </script>
 </body>
