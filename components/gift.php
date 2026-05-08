@@ -1,11 +1,11 @@
 <div id="Content">
-    <!-- Gift Box Section -->
+    <!-- Gift Box Section (Restored) -->
     <div id="kadoIn">
         <img src="./Valentine-Surprise.png" alt="Open Gift Button" />
     </div>
     
     <p id="ket">
-        <span>Spesial untuk <?php echo $target_name; ?>! ✨</span>
+        <span>Ada kado spesial untuk Kaka Diah! ✨</span>
     </p>
 
     <!-- Stickers (Hidden initially) -->

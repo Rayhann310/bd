@@ -71,9 +71,23 @@
                     this.classList.add('sembunyi');
                     document.getElementById('ket').classList.add('sembunyi');
                     
-                    window.nama = window.targetName;
-                    vketikhalo = "Happy " + window.targetAge + "rd Birthday, " + window.targetName + "! ✨";
-                    mulainama();
+                    // Show Loading and Redirect to Wish Page
+                    const loadingContainer = document.getElementById("loading-container");
+                    const loadingBar = document.getElementById("loading-bar");
+                    loadingContainer.classList.remove('sembunyi');
+                    
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += 5;
+                        if (progress >= 100) {
+                            progress = 100;
+                            clearInterval(interval);
+                            setTimeout(() => {
+                                window.location = "wish.php";
+                            }, 500);
+                        }
+                        loadingBar.style.width = progress + "%";
+                    }, 50);
                 }, 800);
             }
         };
