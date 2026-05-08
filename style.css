@@ -18,7 +18,7 @@
 
 body {
     font-family: 'Outfit', sans-serif;
-    background: var(--primary-gradient);
+    background: var(--primary-gradient) !important;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
@@ -26,7 +26,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed; /* Prevents bounce scroll on mobile */
+    position: fixed;
     top: 0;
     left: 0;
 }
@@ -37,10 +37,24 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    background: var(--primary-gradient);
     background-size: cover;
     background-position: center;
     z-index: -2;
     transition: all 1s ease;
+    opacity: 0.8;
+}
+
+/* Ensure SweetAlert background is also pink */
+.swal2-container.swal2-backdrop-show, 
+.swal2-container.swal2-noanimation {
+    background: var(--primary-gradient) !important;
+}
+
+.swal2-popup {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 20px !important;
 }
 
 /* Floating Elements Background */
@@ -82,9 +96,11 @@ body {
 
 /* Main Content Container */
 #Content {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,6 +108,8 @@ body {
     z-index: 1;
     opacity: 0;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 20px;
+    text-align: center;
 }
 
 /* Gift Box Section */
@@ -108,12 +126,19 @@ body {
     transform: scale(1.1) rotate(5deg);
 }
 
+#kadoIn, #kadoIn img {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 #kadoIn img {
     width: clamp(150px, 40vw, 220px);
     height: auto;
-    background: none !important;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
-    mix-blend-mode: multiply;
+    transition: transform 0.3s ease;
 }
 
 #ket {
