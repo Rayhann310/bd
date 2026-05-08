@@ -93,13 +93,13 @@ body {
 /* ===== NEON TEXT MIDDLE ===== */
 #neon-text {
     position: fixed;
-    top: 50%;
+    bottom: 30px; /* Posisi di bawah carousel */
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     text-align: center;
     width: 320px;
     z-index: 200;
-    pointer-events: none; /* Biar tetap bisa klik carousel di baliknya */
+    pointer-events: none;
 }
 
 #neon-text p {

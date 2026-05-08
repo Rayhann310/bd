@@ -32,8 +32,8 @@ var initialPinchDist = null;
 var zoomTarget = radius;
 
 function applyTranform(obj, isManual = false) {
-  if (tY > 180) tY = 180;
-  if (tY < 0) tY = 0;
+  if (tY > 45) tY = 45;
+  if (tY < -45) tY = -45;
   
   if (isManual) {
     // Rotasi manual pada wadah luar (termasuk kemiringan tY)
