@@ -24,13 +24,13 @@
     <!-- Loading Bar -->
     <div id="loading-container" class="sembunyi">
         <div id="loading-bar"></div>
-        <p id="loading-text">Ssttt... Kado sedang dibuka, kejutan segera datang... 🎁✨</p>
+        <p id="loading-text">Ssttt... Kado sedang dibuka... 🎁</p>
     </div>
 
     <!-- Festive Background Elements -->
     <div class="floating-elements" id="balloons"></div>
     
-    <audio src="./y2mate (mp3cut.net).mp3" id="linkmp3" class="sembunyi"></audio>
+    <audio src="./love/music/setlove.mp3" id="linkmp3" class="sembunyi" loop></audio>
 
     <div id="bodyblur">
         <img src="" id="wallpaper" />
@@ -59,6 +59,15 @@
 
     <script src="./assets/js/main.js"></script>
     <script>
+        // Loading Messages
+        const loadingMsgs = [
+            "Membuka kado pelan-pelan... 🎁",
+            "Menyiapkan senyum terbaik... 😊",
+            "Mengumpulkan doa-doa baik... ✨",
+            "Merapikan kejutan spesial... 🎀",
+            "Hampir sampai! Sabar ya Kaka Diah... 🐼💖"
+        ];
+
         // Initialize balloons
         const balloonContainer = document.getElementById('balloons');
         const colors = ['#ff9a9e', '#fad0c4', '#ff217d', '#3333ff', '#ff00cc'];
@@ -72,8 +81,19 @@
             balloonContainer.appendChild(balloon);
         }
 
-        let audio = new Audio(document.getElementById('linkmp3').src);
+        let audio = document.getElementById('linkmp3');
         let fungsiAwal = 0;
+        
+        // Music Persistence Logic
+        if (localStorage.getItem('musicTime')) {
+            audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
+        }
+
+        setInterval(() => {
+            if (!audio.paused) {
+                localStorage.setItem('musicTime', audio.currentTime);
+            }
+        }, 500);
         
         setTimeout(() => {
             document.getElementById('Content').style.opacity = '1';
@@ -97,23 +117,32 @@
                     this.classList.add('sembunyi');
                     document.getElementById('ket').classList.add('sembunyi');
                     
-                    // Show Loading and Redirect to Wish Page
                     const loadingContainer = document.getElementById("loading-container");
                     const loadingBar = document.getElementById("loading-bar");
+                    const loadingText = document.getElementById("loading-text");
                     loadingContainer.classList.remove('sembunyi');
                     
                     let progress = 0;
+                    let msgIndex = 0;
+
+                    // Cycle loading text
+                    const msgInterval = setInterval(() => {
+                        loadingText.innerHTML = loadingMsgs[msgIndex];
+                        msgIndex = (msgIndex + 1) % loadingMsgs.length;
+                    }, 800);
+                    
                     const interval = setInterval(() => {
-                        progress += 5;
+                        progress += 3; // Slightly slower for more text time
                         if (progress >= 100) {
                             progress = 100;
                             clearInterval(interval);
+                            clearInterval(msgInterval);
                             setTimeout(() => {
                                 window.location = "wish.html";
                             }, 500);
                         }
                         loadingBar.style.width = progress + "%";
-                    }, 50);
+                    }, 100);
                 }, 800);
             }
         };

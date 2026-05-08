@@ -54,7 +54,30 @@
         @keyframes floatHeart { 0% { transform: translateY(0) scale(0); opacity: 0; } 20% { opacity: 0.8; } 100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } }
     </style>
 
+    <audio src="./love/music/setlove.mp3" id="linkmp3" class="sembunyi" loop></audio>
+
     <script>
+        let audio = document.getElementById('linkmp3');
+        
+        // Music Persistence Logic
+        if (localStorage.getItem('musicTime')) {
+            audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
+        }
+        
+        // Auto-play on interaction or immediately if possible
+        const playMusic = () => {
+            audio.play().catch(e => console.log("Auto-play blocked"));
+            document.removeEventListener('click', playMusic);
+        };
+        document.addEventListener('click', playMusic);
+        playMusic(); // Try immediate
+
+        setInterval(() => {
+            if (!audio.paused) {
+                localStorage.setItem('musicTime', audio.currentTime);
+            }
+        }, 500);
+
         function createHeart() {
             const heart = document.createElement('div');
             heart.className = 'heart-pixel';
