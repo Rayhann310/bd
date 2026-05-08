@@ -6,8 +6,8 @@ var imgWidth = 140;
 var imgHeight = 190;
 
 // Link of background music - set 'null' if you dont want to play background music
-var bgMusicURL = 'https://api.soundcloud.com/tracks/143041228/stream?client_id=587aa2d384f7333a886010d5f52f302a';
-var bgMusicControls = true; // Show UI music control
+var bgMusicURL = null; // Set to null to use persistent music
+var bgMusicControls = false; 
 
 
 
