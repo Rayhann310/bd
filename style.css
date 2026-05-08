@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Pacifico&family=Dancing+Script:wght@700&display=swap');
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    --primary-gradient: linear-gradient(135deg, #ffe1e1 0%, #ff9a9e 50%, #ff217d 100%);
     --festive-gradient: linear-gradient(to right, #ff00cc, #3333ff);
     --glass-bg: rgba(255, 255, 255, 0.2);
     --glass-border: rgba(255, 255, 255, 0.3);
