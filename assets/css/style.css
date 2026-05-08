@@ -301,6 +301,61 @@ blockquote p#kalimat {
     }
 }
 
+/* Loading Bar Styles */
+#loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 33, 125, 0.95);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+#loading-bar {
+    width: 0%;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    transition: width 0.3s ease;
+    margin-bottom: 20px;
+}
+
+#loading-text {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Extra Festive Animations */
+@keyframes sparkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(1.5) rotate(180deg); opacity: 0.5; }
+}
+
+.sparkle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    animation: sparkle 2s infinite linear;
+    pointer-events: none;
+}
+
 /* Utils */
 .sembunyi {
     display: none !important;

@@ -83,14 +83,40 @@ document.getElementById("By").onclick = function() {
 }
 
 async function menuju() {
-    await swals.fire({
-        title: 'Yay! 🎉',
-        text: 'Ready for the next surprise?',
-        icon: 'success',
-        confirmButtonText: 'Let\'s Go! 💖'
-    });
-    window.location = "./love/index.html";
+    const loadingContainer = document.getElementById("loading-container");
+    const loadingBar = document.getElementById("loading-bar");
+    
+    loadingContainer.classList.remove('sembunyi');
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            setTimeout(() => {
+                window.location = "./love/index.html";
+            }, 500);
+        }
+        loadingBar.style.width = progress + "%";
+    }, 200);
 }
+
+// Sparkle Effect
+function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = Math.random() * 100 + 'vw';
+    sparkle.style.top = Math.random() * 100 + 'vh';
+    sparkle.style.animationDuration = (Math.random() * 2 + 1) + 's';
+    document.body.appendChild(sparkle);
+    
+    setTimeout(() => {
+        sparkle.remove();
+    }, 2000);
+}
+
+setInterval(createSparkle, 300);
 
 const kalimat = document.getElementById("kalimat");
 let vketik1 = kalimat.innerHTML;
