@@ -67,8 +67,7 @@ function kethalo() {
 
 function tombol() {
     const Tombol = document.getElementById("Tombol");
-    Tombol.style.opacity = "1";
-    Tombol.style.transform = "translateY(0)";
+    Tombol.classList.add('visible');
     window.fungsi = 1;
     
     confetti({
