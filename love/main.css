@@ -93,7 +93,7 @@ body {
 /* ===== NEON TEXT MIDDLE ===== */
 #neon-text {
     position: absolute;
-    top: 140px; /* Di bawah ring foto */
+    top: -140px; /* Di atas ring foto */
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
