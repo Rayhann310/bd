@@ -61,10 +61,9 @@
     <script>
         let audio = document.getElementById('linkmp3');
         
-        // Music Persistence Logic
-        if (localStorage.getItem('musicTime')) {
-            audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
-        }
+        // Mulai lagu dari awal (detik 0)
+        audio.currentTime = 0;
+        localStorage.setItem('musicTime', 0);
         
         // Auto-play on interaction
         const playMusic = () => {
