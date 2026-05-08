@@ -19,12 +19,16 @@
 body {
     font-family: 'Outfit', sans-serif;
     background: var(--primary-gradient);
-    min-height: 100vh;
-    overflow-x: hidden;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
     color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed; /* Prevents bounce scroll on mobile */
+    top: 0;
+    left: 0;
 }
 
 #bodyblur {
@@ -78,9 +82,9 @@ body {
 
 /* Main Content Container */
 #Content {
-    width: 90%;
-    max-width: 500px;
-    margin: 20px auto;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -94,7 +98,10 @@ body {
 #kadoIn {
     cursor: pointer;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #kadoIn:hover {
@@ -102,17 +109,16 @@ body {
 }
 
 #kadoIn img {
-    width: 200px;
+    width: clamp(150px, 40vw, 220px);
     height: auto;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
 }
 
 #ket {
-    font-size: 1.2rem;
+    font-size: clamp(0.9rem, 3vw, 1.2rem);
     font-weight: 600;
     color: var(--accent-color);
     text-align: center;
-    margin-top: 1rem;
     background: var(--glass-bg);
     padding: 0.5rem 1.5rem;
     border-radius: 50px;
@@ -127,12 +133,12 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
-    margin: 1.5rem 0;
+    margin: 1rem 0;
 }
 
 .kumpulanstiker img {
-    width: 100px;
-    height: 100px;
+    width: clamp(80px, 20vw, 100px);
+    height: clamp(80px, 20vw, 100px);
     border-radius: 20px;
     background: var(--glass-bg);
     backdrop-filter: blur(5px);
@@ -154,9 +160,10 @@ blockquote {
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
-    padding: 2.5rem 1.5rem;
+    padding: 1.5rem;
     width: 100%;
-    margin: 20px 0;
+    max-width: 400px;
+    margin: 15px 0;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
     text-align: center;
     opacity: 0;
@@ -173,23 +180,22 @@ blockquote.active {
 
 #halo {
     font-family: 'Pacifico', cursive;
-    font-size: 2rem;
+    font-size: clamp(1.4rem, 5vw, 2rem);
     color: var(--accent-color);
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 blockquote p {
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    line-height: 1.5;
     color: var(--text-color);
-    margin: 10px 0;
+    margin: 8px 0;
     font-weight: 400;
 }
 
 blockquote p#kalimat {
     font-weight: 600;
-    font-size: 1.2rem;
 }
 
 .sty2 {
@@ -201,13 +207,13 @@ blockquote p#kalimat {
 #kolombaru {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin: 1.5rem 0;
+    gap: 10px;
+    margin: 1rem 0;
     list-style: none;
 }
 
 #kolombaru li {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 6vw, 2rem);
     transition: all 0.3s ease;
     cursor: default;
 }
@@ -218,7 +224,7 @@ blockquote p#kalimat {
 
 /* Action Button */
 #Tombol {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.5s ease;
@@ -226,7 +232,7 @@ blockquote p#kalimat {
 
 #Tombol a {
     display: inline-block;
-    padding: 12px 32px;
+    padding: 10px 28px;
     background: var(--accent-color);
     color: var(--white);
     text-decoration: none;
@@ -236,6 +242,7 @@ blockquote p#kalimat {
     transition: all 0.3s ease;
     cursor: pointer;
     border: none;
+    font-size: 0.95rem;
 }
 
 #Tombol a:hover {
@@ -244,21 +251,19 @@ blockquote p#kalimat {
 }
 
 /* Mobile Adjustments */
-@media screen and (max-width: 480px) {
-    #halo {
-        font-size: 1.6rem;
+@media screen and (max-height: 600px) {
+    #Content {
+        padding: 10px;
     }
-    
-    blockquote {
-        padding: 1.5rem 1rem;
+    #kadoIn {
+        margin-bottom: 0.5rem;
     }
-    
     #kadoIn img {
-        width: 160px;
+        width: 120px;
     }
-    
-    #ket {
-        font-size: 1rem;
+    blockquote {
+        padding: 1rem;
+        margin: 5px 0;
     }
 }
 
@@ -275,5 +280,6 @@ blockquote p#kalimat {
 }
 
 #pesanditolak img {
-    width: 100px;
-}
+    width: 80px;
+}
+
