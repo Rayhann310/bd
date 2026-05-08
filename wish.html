@@ -63,13 +63,19 @@
         // Mulai lagu dari awal (detik 0)
         audio.currentTime = 0;
         
-        // Auto-play on interaction
+        // Auto-play on interaction (Khusus iPhone/iOS)
         const playMusic = () => {
-            audio.play().catch(e => console.log("Auto-play blocked"));
-            ['click','touchstart'].forEach(ev => document.removeEventListener(ev, playMusic));
+            audio.play().then(() => {
+                // Berhasil diputar
+                ['click','touchstart'].forEach(ev => document.removeEventListener(ev, playMusic));
+            }).catch(e => {
+                console.log("Autoplay ditahan oleh browser, menunggu sentuhan...");
+            });
         };
-        ['click','touchstart'].forEach(ev => document.addEventListener(ev, playMusic));
-        playMusic(); // Coba putar langsung
+        
+        // Coba putar langsung, jika gagal tunggu sentuhan
+        ['click','touchstart','mousedown'].forEach(ev => document.addEventListener(ev, playMusic));
+        playMusic();
 
         function createHeart() {
             const heart = document.createElement('div');
