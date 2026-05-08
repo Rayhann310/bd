@@ -26,15 +26,8 @@
             <img src="images/r2.jpg" alt="">
             <img src="images/r3.jpg" alt="">
             <img src="images/r4.jpg" alt="">
-            <img src="images/r5.jpg" alt="">
-            <img src="images/r6.jpg" alt="">
-            <img src="images/r7.jpg" alt="">
-            <img src="images/r8.jpg" alt="">
             <img src="images/r9.jpg" alt="">
-            <img src="images/r10.jpg" alt="">
-            <img src="images/r11.jpg" alt="">
             <img src="images/r12.jpg" alt="">
-            <img src="images/r13.jpg" alt="">
             <img src="images/r14.jpg" alt="">
             <img src="images/r15.jpg" alt="">
             <img src="images/r16.jpg" alt="">
@@ -55,10 +48,10 @@
     <script>
         // ============ 1. Background Random Photos ============
         const bgWall = document.getElementById('random-photos-bg');
-        const totalImgs = 17;
-        for (let i = 1; i <= totalImgs; i++) {
+        const existingImgs = ['r1','r2','r3','r4','r9','r12','r14','r15','r16','r17'];
+        existingImgs.forEach(name => {
             const img = document.createElement('img');
-            img.src = `images/r${i}.jpg`;
+            img.src = `images/${name}.jpg`;
             img.className = 'bg-random-photo';
             img.style.cssText = `
                 left: ${Math.random() * 100}vw;
@@ -67,7 +60,7 @@
                 opacity: 0.12;
             `;
             bgWall.appendChild(img);
-        }
+        });
 
         // ============ 2. Musik Baru (mulai dari 0) ============
         const audio = document.getElementById('bgAudio');

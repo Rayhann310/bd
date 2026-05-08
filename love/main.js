@@ -1,8 +1,8 @@
 // You can change global variables here:
-var radius = 450; // increased for 17 images
+var radius = 300; // adjusted for 10 images
 var autoRotate = true;
 var rotateSpeed = -60;
-var imgWidth = 140; 
+var imgWidth = 140;
 var imgHeight = 190;
 
 // Link of background music - set 'null' if you dont want to play background music
