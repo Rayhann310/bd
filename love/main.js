@@ -33,18 +33,17 @@ ground.style.height = radius * 3 + "px";
 function init(delayTime) {
   for (var i = 0; i < aEle.length; i++) {
     aEle[i].style.transform = "rotateY(" + (i * (360 / aEle.length)) + "deg) translateZ(" + radius + "px)";
-    aEle[i].style.transition = "transform 1s";
+    aEle[i].style.transition = "transform 0.5s ease-out"; // Smoother transition
     aEle[i].style.transitionDelay = delayTime || (aEle.length - i) / 4 + "s";
+    aEle[i].style.willChange = "transform"; // Hardware acceleration hint
   }
 }
 
 function applyTranform(obj) {
-  // Constrain the angle of camera (between 0 and 180)
   if(tY > 180) tY = 180;
   if(tY < 0) tY = 0;
-
-  // Apply the angle
   obj.style.transform = "rotateX(" + (-tY) + "deg) rotateY(" + (tX) + "deg)";
+  obj.style.transition = "transform 0.1s ease-out"; // Add slight smoothing to manual drag
 }
 
 function playSpin(yes) {
@@ -60,15 +59,6 @@ var sX, sY, nX, nY, desX = 0,
 if (autoRotate) {
   var animationName = (rotateSpeed > 0 ? 'spin' : 'spinRevert');
   ospin.style.animation = `${animationName} ${Math.abs(rotateSpeed)}s infinite linear`;
-}
-
-// add background music
-if (bgMusicURL) {
-  document.getElementById('music-container').innerHTML += `
-<audio src="${bgMusicURL}" ${bgMusicControls? 'controls': ''} autoplay loop>    
-<p>If you are reading this, it is because your browser does not support the audio element.</p>
-</audio>
-`;
 }
 
 // setup events
@@ -112,23 +102,25 @@ document.onpointerdown = function (e) {
 
 // Improved Zoom Logic (Mouse Wheel & Pinch)
 var initialPinchDistance = null;
+var zoomTarget = radius;
 
 function handleZoom(delta) {
-    radius += delta;
-    // Set limits for radius
-    if (radius < 150) radius = 150;
-    if (radius > 800) radius = 800;
+    zoomTarget += delta;
+    if (zoomTarget < 150) zoomTarget = 150;
+    if (zoomTarget > 800) zoomTarget = 800;
     
-    // Update ground size based on radius
+    // Smoothly animate radius towards target
+    radius = radius + (zoomTarget - radius) * 0.2;
+    
     ground.style.width = radius * 3 + "px";
     ground.style.height = radius * 3 + "px";
     
-    init(0.1); // Fast update
+    init(0.05); 
 }
 
 // Mouse Wheel
 window.addEventListener('wheel', function(e) {
-    var delta = e.deltaY * -0.2;
+    var delta = e.deltaY * -0.5;
     handleZoom(delta);
 }, { passive: false });
 
