@@ -1,5 +1,5 @@
 // ===== Carousel Configuration =====
-var radius = 180;
+var radius = 200; // Sedikit lebih lebar agar elegan
 var autoRotate = true;
 var rotateSpeed = -60;
 var imgWidth = 140;
@@ -31,16 +31,15 @@ var nX, nY, sX, sY, desX = 0, desY = 0, tX = 0, tY = 10;
 var initialPinchDist = null;
 var zoomTarget = radius;
 
+// Fungsi ini sekarang mengatur wadah luar (drag)
 function applyTranform(obj) {
   if (tY > 180) tY = 180;
   if (tY < 0) tY = 0;
-  obj.style.transform = "rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
+  // Menambahkan translate(-50%, -50%) agar tetap di tengah saat di-drag
+  obj.style.transform = "translate(-50%, -50%) rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
 }
 
-function playSpin(yes) {
-  ospin.style.animationPlayState = yes ? 'running' : 'paused';
-}
-
+// Auto Rotate (diterapkan pada ospin agar tidak bentrok dengan drag)
 if (autoRotate) {
   var animationName = rotateSpeed > 0 ? 'spin' : 'spinRevert';
   ospin.style.animation = `${animationName} ${Math.abs(rotateSpeed)}s infinite linear`;
@@ -51,17 +50,15 @@ document.onpointerdown = function(e) {
   clearInterval(odrag.timer);
   sX = e.clientX;
   sY = e.clientY;
-  playSpin(false);
 
   this.onpointermove = function(e) {
-    // Handle Drag (Single Touch/Mouse)
     nX = e.clientX;
     nY = e.clientY;
     desX = nX - sX;
     desY = nY - sY;
     tX += desX * 0.15;
     tY += desY * 0.15;
-    applyTranform(ospin);
+    applyTranform(odrag); // Gunakan odrag untuk rotasi manual
     sX = nX;
     sY = nY;
   };
@@ -72,10 +69,9 @@ document.onpointerdown = function(e) {
       desY *= 0.95;
       tX += desX * 0.1;
       tY += desY * 0.1;
-      applyTranform(ospin);
+      applyTranform(odrag);
       if (Math.abs(desX) < 0.5 && Math.abs(desY) < 0.5) {
         clearInterval(odrag.timer);
-        playSpin(true);
       }
     }, 17);
     this.onpointermove = this.onpointerup = null;
