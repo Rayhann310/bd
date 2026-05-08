@@ -74,18 +74,26 @@
         setInterval(spawnHeart, 600);
 
         // ===== 3. Music (fresh start) =====
-        const audio = document.getElementById('bgAudio');
-        audio.currentTime = 0;
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('bgAudio');
+            audio.volume = 1.0;
+            audio.currentTime = 0;
 
-        const startAudio = () => {
-            audio.play().then(() => {
-                ['click','touchstart','mousedown','keydown']
-                    .forEach(ev => document.removeEventListener(ev, startAudio));
-            }).catch(() => {});
-        };
-        startAudio();
-        ['click','touchstart','mousedown','keydown']
-            .forEach(ev => document.addEventListener(ev, startAudio, { once: true }));
+            const startAudio = () => {
+                audio.play().then(() => {
+                    console.log("Music started!");
+                    ['click','touchstart','mousedown','keydown']
+                        .forEach(ev => document.removeEventListener(ev, startAudio));
+                }).catch(e => console.log("Playback blocked, waiting for interaction..."));
+            };
+
+            // Pemicu otomatis (jika diizinkan browser)
+            startAudio();
+            
+            // Pemicu interaksi (wajib untuk HP)
+            ['click','touchstart','mousedown','keydown']
+                .forEach(ev => document.addEventListener(ev, startAudio, { once: true }));
+        });
     </script>
 </body>
 </html>
