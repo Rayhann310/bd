@@ -14,6 +14,8 @@
 <body>
     <!-- Layered Pink Background -->
     <div class="stacked-bg"></div>
+    <!-- Random Background Photos -->
+    <div id="random-photos-container"></div>
 
     <div id="drag-container">
         <div id="spin-container">
@@ -52,6 +54,19 @@
     <script src="main.js"></script>
 
     <script>
+        // Generate Random Background Photos
+        const bgContainer = document.getElementById('random-photos-container');
+        for (let i = 1; i <= 17; i++) {
+            const img = document.createElement('img');
+            img.src = `images/r${i}.jpg`;
+            img.className = 'bg-photo-random';
+            img.style.left = Math.random() * 100 + 'vw';
+            img.style.top = Math.random() * 100 + 'vh';
+            img.style.transform = `rotate(${Math.random() * 40 - 20}deg) scale(${Math.random() * 0.5 + 0.5})`;
+            img.style.opacity = '0.15';
+            bgContainer.appendChild(img);
+        }
+
         window.onload = function() {
             var audio = document.getElementById("myAudio");
             
@@ -72,6 +87,11 @@
                     localStorage.setItem('musicTime', audio.currentTime);
                 }
             }, 500);
+
+            // Trigger animations from main.js if needed
+            if (typeof init === 'function') init(1);
+        };
+    </script>
 
             // Hiệu ứng pháo hoa và trái tim
             const canvas = document.getElementById("canvas");
