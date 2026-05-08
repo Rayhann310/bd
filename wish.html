@@ -66,13 +66,13 @@
             audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
         }
         
-        // Auto-play on interaction or immediately if possible
+        // Auto-play on interaction
         const playMusic = () => {
             audio.play().catch(e => console.log("Auto-play blocked"));
-            document.removeEventListener('click', playMusic);
+            ['click','touchstart'].forEach(ev => document.removeEventListener(ev, playMusic));
         };
-        document.addEventListener('click', playMusic);
-        playMusic(); // Try immediate
+        ['click','touchstart'].forEach(ev => document.addEventListener(ev, playMusic));
+        playMusic(); // Coba putar langsung
 
         setInterval(() => {
             if (!audio.paused) {
