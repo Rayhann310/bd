@@ -111,7 +111,9 @@ body {
 #kadoIn img {
     width: clamp(150px, 40vw, 220px);
     height: auto;
+    background: none !important;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+    mix-blend-mode: multiply;
 }
 
 #ket {
