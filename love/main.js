@@ -36,7 +36,8 @@ function init(delayTime) {
 function applyTranform(obj) {
   if (tY > 180) tY = 180;
   if (tY < 0) tY = 0;
-  obj.style.transform = "rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
+  // Keep translate(-50%,-50%) to maintain centering when JS overrides CSS transform
+  obj.style.transform = "translate(-50%, -50%) rotateX(" + (-tY) + "deg) rotateY(" + tX + "deg)";
   obj.style.transition = "transform 0.1s ease-out";
 }
 
