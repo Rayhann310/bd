@@ -92,14 +92,15 @@ body {
 
 /* ===== NEON TEXT MIDDLE ===== */
 #neon-text {
-    position: fixed;
-    bottom: 30px; /* Posisi di bawah carousel */
+    position: absolute;
+    top: 140px; /* Di bawah ring foto */
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     text-align: center;
     width: 320px;
     z-index: 200;
     pointer-events: none;
+    transform-style: preserve-3d;
 }
 
 #neon-text p {
