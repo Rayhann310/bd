@@ -94,21 +94,12 @@
         }
         setInterval(spawnHeart, 800);
 
-        // ===== 3. Music (Bersambung) =====
+        // ===== 3. Music (Mulai dari Awal) =====
         window.addEventListener('load', () => {
             initBgGrid();
             const audio = document.getElementById('bgAudio');
             audio.volume = 1.0;
-            
-            if (localStorage.getItem('musicTime')) {
-                audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
-            }
-
-            setInterval(() => {
-                if (!audio.paused) {
-                    localStorage.setItem('musicTime', audio.currentTime);
-                }
-            }, 500);
+            audio.currentTime = 0; // Paksa dari awal
 
             const startAudio = () => {
                 audio.play().catch(() => {});

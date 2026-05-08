@@ -89,17 +89,6 @@
         let audio = document.getElementById('linkmp3');
         let fungsiAwal = 0;
         
-        // Music Persistence Logic
-        if (localStorage.getItem('musicTime')) {
-            audio.currentTime = parseFloat(localStorage.getItem('musicTime'));
-        }
-
-        setInterval(() => {
-            if (!audio.paused) {
-                localStorage.setItem('musicTime', audio.currentTime);
-            }
-        }, 500);
-        
         setTimeout(() => {
             document.getElementById('Content').style.opacity = '1';
         }, 500);

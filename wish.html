@@ -60,10 +60,8 @@
 
     <script>
         let audio = document.getElementById('linkmp3');
-        
         // Mulai lagu dari awal (detik 0)
         audio.currentTime = 0;
-        localStorage.setItem('musicTime', 0);
         
         // Auto-play on interaction
         const playMusic = () => {
@@ -72,12 +70,6 @@
         };
         ['click','touchstart'].forEach(ev => document.addEventListener(ev, playMusic));
         playMusic(); // Coba putar langsung
-
-        setInterval(() => {
-            if (!audio.paused) {
-                localStorage.setItem('musicTime', audio.currentTime);
-            }
-        }, 500);
 
         function createHeart() {
             const heart = document.createElement('div');
